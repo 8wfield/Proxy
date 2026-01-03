@@ -13,7 +13,7 @@ DOMAIN-SUFFIX, nicegram.cloud, {{{Proxy}}}
 DOMAIN-SUFFIX, intentchat.app, {{{Proxy}}}
 
 [Script]
-[Telegram] = type=http-response, pattern=^https?://t\.me/(.+), script-path=https://raw.githubusercontent.com/8wfield/Proxy/refs/heads/main/Egern/Script/Telegram.js, argument="{{{客户端}}}"
+Telegram重定向 = type=http-response, pattern=^https?://t\.me/(.+), script-path=https://raw.githubusercontent.com/8wfield/Proxy/refs/heads/main/Egern/Script/Telegram.js, argument="{{{客户端}}}"
 
 [MITM]
 hostname = %APPEND% t.me
