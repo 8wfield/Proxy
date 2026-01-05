@@ -152,7 +152,7 @@ function operator(proxies) {
     arr.forEach((value, i) => { Allmap[value] = outList[i]; });
   });
 
-  // 过滤（保持不变）
+  // 过滤（不变）
   if (clear || nx || blnx || key) {
     proxies = proxies.filter(p => {
       const n = p.name;
@@ -166,10 +166,10 @@ function operator(proxies) {
   const BLKEYS = BLKEY ? BLKEY.split("+") : [];
 
   proxies.forEach(p => {
-    let retainKey = "";        // blkey 保留的关键词（如 IPLC、专线）
     const originalName = p.name;
+    let tags = [];  // 统一存放所有 [] 标签
 
-    // rurekey 预处理
+    // rurekey 预处理（保持原逻辑）
     Object.keys(rurekey).forEach(k => {
       if (rurekey[k].test(p.name)) {
         p.name = p.name.replace(rurekey[k], k);
@@ -181,48 +181,56 @@ function operator(proxies) {
     else if (blockquic === "off") p["block-quic"] = "off";
     else delete p["block-quic"];
 
-    // BLKEY 处理 & 替换支持
-    if (BLKEYS.length > 0) {
-      let replaceDone = false, replaceTo = "";
-      BLKEYS.forEach(item => {
-        if (item.includes(">")) {
-          const [oldK, newK] = item.split(">");
-          if (p.name.includes(oldK)) {
-            if (newK) { replaceTo = newK; replaceDone = true; }
-          }
-        } else if (p.name.includes(item)) {
-          retainKey = item;
-        }
-      });
-      if (replaceDone && replaceTo) retainKey = replaceTo;
-      else if (!retainKey && BLKEYS.length > 0) {
-        retainKey = BLKEYS.find(k => p.name.includes(k.split(">")[0])) || "";
-      }
-    }
-
-    // 倍率处理 → [X倍]
-    let multiplier = "";
+    // === 1. blgd 固定标识保留（修复：现在一定生效）===
     if (blgd) {
       regexArray.forEach((re, i) => {
         if (re.test(p.name)) {
           const val = valueArray[i];
+          // 纯数字倍率如 2× → [2倍]
           if (val.match(/^\d+×$/)) {
-            multiplier = `[${val.replace("×","")}倍]`;
-          } else if (!val.match(/^[A-Za-z]+$/)) {  // 非纯字母的也转为 [ ]
-            multiplier = `[${val}]`;
+            tags.push(`[${val.replace("×", "")}倍]`);
+          } else {
+            // 其他如 IPLC、家宽、GPT 等直接 []
+            tags.push(`[${val}]`);
           }
         }
       });
     }
-    if (bl && !multiplier) {
+
+    // === 2. bl 正则倍率提取 ===
+    if (bl) {
       const m = p.name.match(/((倍率|X|x|×)\D?((\d{1,3}\.)?\d+)\D?)|((\d{1,3}\.)?\d+)(倍|X|x|×)/);
       if (m) {
         const num = m[0].match(/(\d[\d.]*)/)[0];
-        if (num !== "1") multiplier = `[${num}倍]`;
+        if (num !== "1") {
+          tags.push(`[${num}倍]`);
+        }
       }
     }
 
-    // 地区匹配
+    // === 3. blkey 关键词保留 + 替换支持 ===
+    if (BLKEYS.length > 0) {
+      let replaced = false;
+      let replaceTo = "";
+      for (const item of BLKEYS) {
+        if (item.includes(">")) {
+          const [oldK, newK] = item.split(">");
+          if (p.name.includes(oldK)) {
+            if (newK) {
+              tags.push(`[${newK}]`);
+              replaced = true;
+            } else {
+              tags.push(`[${oldK}]`);
+            }
+          }
+        } else if (p.name.includes(item)) {
+          tags.push(`[${item}]`);
+        }
+      }
+      // 如果有多个，只取第一个匹配的避免重复
+    }
+
+    // === 地区匹配 ===
     !GetK && ObjKA(Allmap);
     const match = AMK.find(([k]) => p.name.includes(k));
     let regionPart = "";
@@ -249,15 +257,15 @@ function operator(proxies) {
       }
     }
 
-    // 保存临时字段：纯地区部分 + 倍率/保留关键词（后续放编号后）
+    // 保存临时字段
     p._cleanRegion = regionPart;
-    p._extraTags = [retainKey, multiplier].filter(Boolean).join("");  // 如 [IPLC][3倍] 或单个
-    p._fullName = originalName; // 用于提取原始 [...] 参数
+    p._extraTags = tags.join("");  // 如 [家宽][2倍][GPT]
+    p._fullName = originalName;
   });
 
   proxies = proxies.filter(p => p.name !== null);
 
-  // ============ 分组去重逻辑（修改这里实现“移到角标后面”）===========
+  // === 分组去重（标签放在编号后）===
   const groups = {};
   for (const p of proxies) {
     const sub = (p._subDisplayName || p._subName) ? (p._subDisplayName || p._subName) + " - " : "";
@@ -270,12 +278,10 @@ function operator(proxies) {
   for (const key in groups) {
     const group = groups[key];
     group.forEach((p, i) => {
-      // 提取原始名称中最后的 [...] 参数（如延迟、流量等）
       const retainMatch = p._fullName.match(/\s*\[[^\]]*\]$/);
       const retainPart = retainMatch ? retainMatch[0].trim() : "";
 
-      // 倍率和保留关键词放在编号后面、[...]前面
-      const extraPart = p._extraTags ? p._extraTags : "";
+      const extraPart = p._extraTags || "";
 
       if (group.length === 1) {
         p.name = key + extraPart + retainPart;
@@ -295,7 +301,6 @@ function operator(proxies) {
     delete p._subName;
   });
 
-  // key 过滤
   if (key) {
     return result.filter(p => !keyb.test(p.name));
   }
