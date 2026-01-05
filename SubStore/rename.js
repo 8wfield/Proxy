@@ -43,7 +43,7 @@ const nx = inArg.nx || false,
   key = inArg.key || false,
   blgd = inArg.blgd || false,
   blnx = inArg.blnx || false,
-  clear = inArg.clear || false,
+  clear = inArg.clear !== false,
   addflag = inArg.flag || false,
   nm = inArg.nm || false;
 
