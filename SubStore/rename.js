@@ -1,15 +1,15 @@
 /**
  * 优化重写版 rename.js
  * 更新：2026-01-06
+ */
 
 const inArg = $arguments;
 
-const addflag  = inArg.flag || false;
+const addflag = inArg.flag || false;
 const nm       = inArg.nm || false;
 const clear    = inArg.clear || false;
 const nx       = inArg.nx || false;
-const bl       = inArg.bl || false;
-const blgd     = inArg.blgd || false;
+const bl = inArg.bl || false;
 const blnx     = inArg.blnx || false;
 const blkey    = inArg.blkey ? decodeURI(inArg.blkey) : "";
 const manualName = inArg.name ? decodeURI(inArg.name) : "";
@@ -90,51 +90,18 @@ function operator(proxies) {
     p._retainTag = match ? `[${match[1]}]` : "";
     p._cleanName = p._cleanName.replace(/\s*\[[^\]]*\]$/, "").trim();
 
+
     if (bl) {
       const rateMatch = p._cleanName.match(/((倍率|X|x|×)\D?((\d{1,3}\.)?\d+)|((\d{1,3}\.)?\d+)(倍|X|x|×))/);
       if (rateMatch) {
         const num = rateMatch[0].match(/(\d[\d.]*)/)[0];
         if (num !== "1") {
-          p._retainTag += `[${num}Χ]`;
-          p._cleanName = p._cleanName.replace(rateMatch[0], "").trim();
+          p._retainTag = `[${num}Χ]` + p._retainTag;
         }
+        p._cleanName = p._cleanName.replace(rateMatch[0], "").trim();
       }
     }
 
-    if (blgd) {
-      const patterns = [
-        [/ˣ²/g,   "2Χ"],
-        [/ˣ³/g,   "3Χ"],
-        [/ˣ⁴/g,   "4Χ"],
-        [/ˣ⁵/g,   "5Χ"],
-        [/ˣ⁶/g,   "6Χ"],
-        [/ˣ⁷/g,   "7Χ"],
-        [/ˣ⁸/g,   "8Χ"],
-        [/ˣ⁹/g,   "9Χ"],
-        [/ˣ¹⁰/g,  "10Χ"],
-        [/ˣ²⁰/g,  "20Χ"],
-        [/ˣ³⁰/g,  "30Χ"],
-        [/ˣ⁴⁰/g,  "40Χ"],
-        [/ˣ⁵⁰/g,  "50Χ"],
-        [/家宽/i,  "家宽"],
-        [/游戏|game/i, "游戏"],
-        [/IPLC/i,  "IPLC"],
-        [/IEPL/i,  "IEPL"],
-        [/专线/i,  "专线"],
-        [/\bUDP\b/i, "UDP"],
-        [/\bGPT\b/i, "GPT"],
-        [/CF|cloudflare/i, "CF"],
-      ];
-
-      patterns.forEach(([regex, tag]) => {
-        if (regex.test(p._cleanName)) {
-          p._retainTag += `[${tag}]`;
-          p._cleanName = p._cleanName.replace(regex, "").trim();
-        }
-      });
-      p._cleanName = p._cleanName.replace(/[ˣᵡ][⁰¹²³⁴⁵⁶⁷⁸⁹¹⁰²⁰³⁰⁴⁰⁵⁰]/g, "").trim();
-    }
-    
     if (blkey) {
       const keys = blkey.split("+");
       keys.forEach(k => {
@@ -169,6 +136,7 @@ function operator(proxies) {
 
   const validProxies = filtered.filter(p => p._cleanRegion !== null);
 
+  // 核心：支持 _subDisplayName / _subName
   const groups = {};
   for (const p of validProxies) {
     let subName = manualName;
