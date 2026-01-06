@@ -157,10 +157,11 @@ function operator(proxies) {
     // bl 倍率
     if (bl) {
       const match = p.name.match(/(?:倍率|[Xx×]?\D*)(\d+(?:\.\d+)?)(?:\D*[Xx×倍])/i);
+
       if (match && match[1]) {
         const num = match[1].trim();
-        if (num !== "1" && num !== "1.0") {
-          tags.push(`[${num}×]`);
+        if (num !== "1" && num !== "1.0" && num !== "1.00") {
+          tags.push(`[${num}倍]`);
           p.name = p.name.replace(match[0], '').trim();
         }
       }
