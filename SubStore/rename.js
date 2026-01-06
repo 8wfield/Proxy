@@ -156,14 +156,12 @@ function operator(proxies) {
 
     // bl 倍率
     if (bl) {
-      const match = e.name.match(
-        /((倍率|X|x|×)\D?((\d{1,3}\.)?\d+)\D?)|((\d{1,3}\.)?\d+)(倍|X|x|×)/
-      );
-      if (match) {
-        const rev = match[0].match(/(\d[\d.]*)/)[0];
-        if (rev !== "1") {
-          const newValue = rev + "×";
-          ikey = newValue;
+      const match = p.name.match(/(?:倍率|[Xx×]?\D*)(\d+(?:\.\d+)?)(?:\D*[Xx×倍])/i);
+      if (match && match[1]) {
+        const num = match[1].trim();
+        if (num !== "1" && num !== "1.0") {
+          tags.push(`[${num}×]`);
+          p.name = p.name.replace(match[0], '').trim();
         }
       }
     }
