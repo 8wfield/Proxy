@@ -1,0 +1,7 @@
+# 规则名称: Threads
+# 规则统计: 1
+# 更新时间: 2026/01/18
+
+domain_suffix_set:
+  - threads.net
+

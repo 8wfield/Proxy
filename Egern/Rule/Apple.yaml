@@ -1,0 +1,97 @@
+# 规则名称: Apple
+# 规则统计: 83
+# 更新时间: 2026/01/18
+
+no_resolve: true
+
+domain_set:
+  - appleid.apple.com
+  - appleid.cdn-apple.com
+  - apps.apple.com
+  - beta.apple.com
+  - gsa.apple.com
+  - idmsa.apple.com
+  - itunes.apple.com
+  - testflight.apple.com
+
+domain_suffix_set:
+  - apple-cloudkit.com
+  - apple-icloud.cn
+  - apple-livephotoskit.com
+  - appleicloud.cn
+  - applemx-icloud.com
+  - apzones.com
+  - cdn-apple.com
+  - gc.apple.com
+  - icloud-apple.cn
+  - icloud-content.com
+  - icloud-isupport.com
+  - icloud-sandbox.com
+  - icloud.apple.com
+  - icloud.ch
+  - icloud.com
+  - icloud.com.cn
+  - icloud.de
+  - icloud.ee
+  - icloud.fi
+  - icloud.fr
+  - icloud.hu
+  - icloud.ie
+  - icloud.is
+  - icloud.jp
+  - icloud.lv
+  - icloud.net.cn
+  - icloud.om
+  - icloud.org
+  - icloud.pt
+  - icloud.ro
+  - icloud.se
+  - icloud.si
+  - icloud.sk
+  - icloud.vn
+  - icloudads.net
+  - icloudapple.cn
+  - icloudbox.net
+  - icloudbrowser.net
+  - icloude.com
+  - icloudhome.com
+  - icloudmail.net
+  - icloudmusic.net
+  - icloudnet.net
+  - icloudo.com
+  - icloudo.de
+  - icloudo.net
+  - icloudos.de
+  - icloudos.net
+  - icloudpay.net
+  - icloudsecure.net
+  - icloudsetup.com
+  - ios-icloud.com
+  - iwork.apple.com
+  - me.com
+  - myicloud.net
+  - mylcloud.net
+  - www-cdn.icloud.com.akadns.net
+  - wwwicloud.com
+
+domain_keyword_set:
+  - apple-support.akadns.net
+  - apple.com.akadns.net
+  - apple.com.edgekey.net
+  - buy.itunes.apple.com
+  - icloud.com.akadns.net
+  - smp-device
+  - testflight
+
+ip_cidr_set:
+  - 139.178.128.0/18
+  - 144.178.0.0/19
+  - 144.178.36.0/22
+  - 144.178.48.0/20
+  - 17.0.0.0/8
+  - 192.35.50.0/24
+  - 198.183.17.0/24
+  - 205.180.175.0/24
+  - 63.92.224.0/19
+  - 65.199.22.0/23
+

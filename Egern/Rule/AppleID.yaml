@@ -1,0 +1,10 @@
+# 规则名称: AppleID
+# 规则统计: 4
+# 更新时间: 2026/01/18
+
+domain_set:
+  - appleid.apple.com
+  - appleid.cdn-apple.com
+  - gsa.apple.com
+  - idmsa.apple.com
+

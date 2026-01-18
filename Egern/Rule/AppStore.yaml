@@ -1,0 +1,8 @@
+# 规则名称: AppStore
+# 规则统计: 2
+# 更新时间: 2026/01/18
+
+domain_set:
+  - apps.apple.com
+  - itunes.apple.com
+
