@@ -44,9 +44,9 @@ jobs:
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflare/Cloudflare.list"
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.list"
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BlockHttpDNS/BlockHttpDNS.list"
-             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ByteDance/ByteDance.list"
-             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Tencent/Tencent.list"
-             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Alibaba/Alibaba.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ByteDance/ByteDance.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Tencent/Tencent.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Alibaba/Alibaba.list"
           )
 
           RULES=(
@@ -78,28 +78,30 @@ jobs:
 
           ORDERED_RULE_TYPES=(
             "DOMAIN"
-            "DOMAIN-SUFFIX"
             "DOMAIN-KEYWORD"
+            "DOMAIN-SUFFIX"
             "DOMAIN-WILDCARD"
+            "GEOIP"
             "IP-CIDR"
             "IP-CIDR6"
-            "IP-ASN"
             "URL-REGEX"
+            "USER-AGENT"
+            "IP-ASN"
             "DEST-PORT"
-            "GEOIP"
           )
 
           declare -A RULE_MAP=(
             ["DOMAIN"]="domain_set"
-            ["DOMAIN-SUFFIX"]="domain_suffix_set"
             ["DOMAIN-KEYWORD"]="domain_keyword_set"
+            ["DOMAIN-SUFFIX"]="domain_suffix_set"
             ["DOMAIN-WILDCARD"]="domain_wildcard_set"
+            ["GEOIP"]="geoip_set"
             ["IP-CIDR"]="ip_cidr_set"
             ["IP-CIDR6"]="ip_cidr6_set"
-            ["IP-ASN"]="asn_set"
             ["URL-REGEX"]="url_regex_set"
+            ["USER-AGENT"]="user_agent_set"
+            ["IP-ASN"]="asn_set"
             ["DEST-PORT"]="dest_port_set"
-            ["GEOIP"]="geoip_set"
           )
 
           for list_file in tmp/*.list; do
@@ -107,10 +109,10 @@ jobs:
             base_name=$(basename "$list_file" .list)
             output_file="Egern/Rule/$base_name.yaml"
 
-            grep -E '^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|DEST-PORT|GEOIP),' "$list_file" | sed 's/,no-resolve$//' > tmp/current_work.tmp
+            grep -E '^[- ]*(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|DEST-PORT|GEOIP|USER-AGENT),' "$list_file" | sed 's/,no-resolve$//' > tmp/current_work.tmp
 
             no_resolve_flag="false"
-            if grep -qE '^(IP-(ASN|CIDR|CIDR6)),.*,no-resolve$' "$list_file"; then
+            if grep -qE '^[- ]*(IP-(ASN|CIDR|CIDR6)),.*,no-resolve$' "$list_file"; then
               no_resolve_flag="true"
             fi
 
@@ -126,7 +128,7 @@ jobs:
 
             for rule_type in "${ORDERED_RULE_TYPES[@]}"; do
               egern_type="${RULE_MAP[$rule_type]}"
-              grep "^$rule_type," tmp/current_work.tmp | \
+              grep "^[- ]*$rule_type," tmp/current_work.tmp | \
               awk -F',' -v rule_type="$rule_type" '{
                 value=$2;
                 if (rule_type == "URL-REGEX" || rule_type == "DOMAIN-WILDCARD") {
