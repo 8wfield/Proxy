@@ -52,9 +52,9 @@ jobs:
           RULES=(
             "BanAD https://anti-ad.net/surge.txt https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Surge-RULE-SET.list"
             "Apple https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppStore/AppStore.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleID/AppleID.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/iCloud/iCloud.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TestFlight/TestFlight.list"
-            "ChinaDomain https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/direct.txt https://ruleset.skk.moe/List/non_ip/domestic.conf https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
+            "ChinaDomain https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/direct.txt https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.list https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
             "ProxyGFWlist https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
-            "AI https://ruleset.skk.moe/List/non_ip/ai.conf"
+            "AI https://gist.githubusercontent.com/ddgksf2013/cb4121e8b5c5d865cc949cb8120320c4/raw/Ai.yaml https://raw.githubusercontent.com/ddgksf2013/Filter/refs/heads/master/AppleIntelligence.list"
           )
 
           CURRENT_TIME=$(TZ='Asia/Shanghai' date '+%Y/%m/%d')
