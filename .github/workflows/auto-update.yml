@@ -1,0 +1,159 @@
+name: Build Egern Rules
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Prepare Directories
+        run: |
+          mkdir -p Egern/Rule
+          mkdir -p tmp
+      - name: Download and Convert Rules
+        run: |
+          RULE=(
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Twitter.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Telegram.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/TikTok.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Spotify.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Youtube.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Instagram.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Facebook.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Google.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Github.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OneDrive.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Microsoft.list"
+            "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HBO/HBO.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrimeVideo/PrimeVideo.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AppStore/AppStore.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TestFlight/TestFlight.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/iCloud/iCloud.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AppleID/AppleID.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/PayPal/PayPal.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Cloudflare/Cloudflare.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Threads/Threads.list"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/BlockHttpDNS/BlockHttpDNS.list"
+             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ByteDance/ByteDance.list"
+             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Tencent/Tencent.list"
+             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Alibaba/Alibaba.list"
+          )
+
+          RULES=(
+            "BanAD https://anti-ad.net/surge.txt https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Surge-RULE-SET.list"
+            "Apple https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AppStore/AppStore.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AppleID/AppleID.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/iCloud/iCloud.list https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TestFlight/TestFlight.list"
+            "ChinaDomain https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/direct.txt https://ruleset.skk.moe/List/non_ip/domestic.conf https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
+            "ProxyGFWlist https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+            "AI https://ruleset.skk.moe/List/non_ip/ai.conf"
+          )
+
+          CURRENT_TIME=$(TZ='Asia/Shanghai' date '+%Y/%m/%d')
+
+          for item in "${RULE[@]}"; do
+            url=$(echo "$item" | xargs)
+            filename=$(basename "$url" .list)
+            curl -sL -f "$url" -o "tmp/$filename.list" || echo "失败: $url"
+          done
+
+          for group in "${RULES[@]}"; do
+            group_name=$(echo "$group" | cut -d' ' -f1)
+            temp_merged="tmp/$group_name.merged"
+            > "$temp_merged"
+            links=$(echo "$group" | cut -d' ' -f2-)
+            for url in $links; do
+              curl -sL -f "$url" >> "$temp_merged" && echo "" >> "$temp_merged" || echo "失败: $url"
+            done
+            sort -u "$temp_merged" | grep -v '^$' > "tmp/$group_name.list"
+          done
+
+          ORDERED_RULE_TYPES=(
+            "DOMAIN"
+            "DOMAIN-SUFFIX"
+            "DOMAIN-KEYWORD"
+            "DOMAIN-WILDCARD"
+            "IP-CIDR"
+            "IP-CIDR6"
+            "IP-ASN"
+            "URL-REGEX"
+            "DEST-PORT"
+            "GEOIP"
+          )
+
+          declare -A RULE_MAP=(
+            ["DOMAIN"]="domain_set"
+            ["DOMAIN-SUFFIX"]="domain_suffix_set"
+            ["DOMAIN-KEYWORD"]="domain_keyword_set"
+            ["DOMAIN-WILDCARD"]="domain_wildcard_set"
+            ["IP-CIDR"]="ip_cidr_set"
+            ["IP-CIDR6"]="ip_cidr6_set"
+            ["IP-ASN"]="asn_set"
+            ["URL-REGEX"]="url_regex_set"
+            ["DEST-PORT"]="dest_port_set"
+            ["GEOIP"]="geoip_set"
+          )
+
+          for list_file in tmp/*.list; do
+            [ -e "$list_file" ] || break
+            base_name=$(basename "$list_file" .list)
+            output_file="Egern/Rule/$base_name.yaml"
+
+            grep -E '^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|DEST-PORT|GEOIP),' "$list_file" | sed 's/,no-resolve$//' > tmp/current_work.tmp
+
+            no_resolve_flag="false"
+            if grep -qE '^(IP-(ASN|CIDR|CIDR6)),.*,no-resolve$' "$list_file"; then
+              no_resolve_flag="true"
+            fi
+
+            echo "# 规则名称: $base_name" > "$output_file"
+            echo "# 规则统计: 0" >> "$output_file"
+            echo "# 更新时间: $CURRENT_TIME" >> "$output_file"
+            echo "" >> "$output_file"
+
+            if [ "$no_resolve_flag" = "true" ]; then
+              echo "no_resolve: true" >> "$output_file"
+              echo "" >> "$output_file"
+            fi
+
+            for rule_type in "${ORDERED_RULE_TYPES[@]}"; do
+              egern_type="${RULE_MAP[$rule_type]}"
+              grep "^$rule_type," tmp/current_work.tmp | \
+              awk -F',' -v rule_type="$rule_type" '{
+                value=$2;
+                if (rule_type == "URL-REGEX" || rule_type == "DOMAIN-WILDCARD") {
+                  value="\"" value "\""
+                }
+                print value
+              }' | sort -u > tmp/values.tmp
+
+              if [ -s tmp/values.tmp ]; then
+                echo "$egern_type:" >> "$output_file"
+                sed 's/^/  - /' tmp/values.tmp >> "$output_file"
+                echo "" >> "$output_file"
+              fi
+            done
+
+            total_rules=$(grep -c '^  - ' "$output_file" 2>/dev/null || echo 0)
+            sed -i "2s/# 规则统计: 0/# 规则统计: $total_rules/" "$output_file"
+          done
+
+      - name: Commit Changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add Egern/
+          if git diff --cached --quiet; then
+            echo "无变更"
+          else
+            git commit -m "Auto Update Rules: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M')"
+            git push
+          fi
