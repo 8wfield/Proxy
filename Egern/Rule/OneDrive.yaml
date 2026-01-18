@@ -1,6 +1,11 @@
 # 规则名称: OneDrive
-# 规则统计: 15
+# 规则统计: 17
 # 更新时间: 2026/01/18
+
+domain_keyword_set:
+  - 1drv
+  - onedrive
+  - skydrive
 
 domain_suffix_set:
   - livefilestore.com
@@ -16,8 +21,7 @@ domain_suffix_set:
   - storage.live.com
   - storage.msn.com
 
-domain_keyword_set:
-  - 1drv
-  - onedrive
-  - skydrive
+user_agent_set:
+  - OneDrive*
+  - OneDriveiOSApp*
 

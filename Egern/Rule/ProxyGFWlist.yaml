@@ -13,6 +13,33 @@ domain_set:
   - steamusercontent-a.akamaihd.net
   - steamuserimages-a.akamaihd.net
 
+domain_keyword_set:
+  - 1drv
+  - 1e100
+  - abema
+  - appledaily
+  - avtb
+  - beetalk
+  - blogspot
+  - dropbox
+  - facebook
+  - fbcdn
+  - github
+  - gmail
+  - google
+  - instagram
+  - onedrive
+  - porn
+  - sci-hub
+  - skydrive
+  - spotify
+  - telegram
+  - ttvnw
+  - twitter
+  - uk-live
+  - whatsapp
+  - youtube
+
 domain_suffix_set:
   - 000webhost.com
   - 030buy.com
@@ -7310,33 +7337,6 @@ domain_suffix_set:
   - zzcartoon.com
   - zzcloud.me
   - zzux.com
-
-domain_keyword_set:
-  - 1drv
-  - 1e100
-  - abema
-  - appledaily
-  - avtb
-  - beetalk
-  - blogspot
-  - dropbox
-  - facebook
-  - fbcdn
-  - github
-  - gmail
-  - google
-  - instagram
-  - onedrive
-  - porn
-  - sci-hub
-  - skydrive
-  - spotify
-  - telegram
-  - ttvnw
-  - twitter
-  - uk-live
-  - whatsapp
-  - youtube
 
 ip_cidr_set:
   - 1.201.0.0/24

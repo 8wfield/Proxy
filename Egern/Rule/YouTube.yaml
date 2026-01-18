@@ -1,10 +1,13 @@
 # 规则名称: YouTube
-# 规则统计: 14
+# 规则统计: 17
 # 更新时间: 2026/01/18
 
 domain_set:
   - youtubei.googleapis.com
   - yt3.ggpht.com
+
+domain_keyword_set:
+  - youtube
 
 domain_suffix_set:
   - googlevideo.com
@@ -19,6 +22,8 @@ domain_suffix_set:
   - yt.be
   - ytimg.com
 
-domain_keyword_set:
-  - youtube
+user_agent_set:
+  - *youtube*
+  - YouTube*
+  - com.google.ios.youtube*
 

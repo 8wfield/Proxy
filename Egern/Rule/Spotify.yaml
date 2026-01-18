@@ -1,6 +1,10 @@
 # 规则名称: Spotify
-# 规则统计: 8
+# 规则统计: 9
 # 更新时间: 2026/01/18
+
+domain_keyword_set:
+  - -spotify-
+  - spotify.com
 
 domain_suffix_set:
   - pscdn.co
@@ -10,7 +14,6 @@ domain_suffix_set:
   - spotifycdn.com
   - spotifycdn.net
 
-domain_keyword_set:
-  - -spotify-
-  - spotify.com
+user_agent_set:
+  - Spotify*
 

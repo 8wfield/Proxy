@@ -4,6 +4,10 @@
 
 no_resolve: true
 
+domain_keyword_set:
+  - gmail
+  - google
+
 domain_suffix_set:
   - 1e100.net
   - 2mdn.net
@@ -26,10 +30,6 @@ domain_suffix_set:
   - youtube.com
   - yt.be
   - ytimg.com
-
-domain_keyword_set:
-  - gmail
-  - google
 
 ip_cidr_set:
   - 173.194.0.0/16

@@ -4,6 +4,9 @@
 
 no_resolve: true
 
+domain_keyword_set:
+  - telegram
+
 domain_suffix_set:
   - t.me
   - tdesktop.com
@@ -11,9 +14,6 @@ domain_suffix_set:
   - telegram.me
   - telegram.org
   - telesco.pe
-
-domain_keyword_set:
-  - telegram
 
 ip_cidr_set:
   - 109.239.140.0/24

@@ -889,6 +889,13 @@ domain_set:
   - zjres-ad.kajicam.com
   - zxid-m.mobileservice.cn
 
+domain_keyword_set:
+  - -ad.sm.cn
+  - -ad.video.yximgs.com
+  - -ad.wtzw.com
+  - -be-pack-sign.pglstatp-toutiao.com
+  - -normal.zijieapi.com
+
 domain_suffix_set:
   - 0.myikas.com
   - 0.net.easyjet.com
@@ -101938,11 +101945,4 @@ domain_suffix_set:
   - zzyxhvqjjtgxj.online
   - zzzjvqzzlavew.top
   - zzzmjfixezere.site
-
-domain_keyword_set:
-  - -ad.sm.cn
-  - -ad.video.yximgs.com
-  - -ad.wtzw.com
-  - -be-pack-sign.pglstatp-toutiao.com
-  - -normal.zijieapi.com
 

@@ -1,6 +1,9 @@
 # 规则名称: TikTok
-# 规则统计: 10
+# 规则统计: 11
 # 更新时间: 2026/01/18
+
+domain_keyword_set:
+  - tiktokcdn
 
 domain_suffix_set:
   - byteoversea.com
@@ -13,6 +16,6 @@ domain_suffix_set:
   - tiktokcdn.com
   - tiktokv.com
 
-domain_keyword_set:
-  - tiktokcdn
+user_agent_set:
+  - TikTok*
 

@@ -2,13 +2,13 @@
 # 规则统计: 6
 # 更新时间: 2026/01/18
 
+domain_keyword_set:
+  - github
+
 domain_suffix_set:
   - github.com
   - github.io
   - githubapp.com
   - githubassets.com
   - githubusercontent.com
-
-domain_keyword_set:
-  - github
 

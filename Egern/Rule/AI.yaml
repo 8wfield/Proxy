@@ -1,6 +1,31 @@
 # 规则名称: AI
-# 规则统计: 10
+# 规则统计: 88
 # 更新时间: 2026/01/18
+
+domain_set:
+  - ai.google.dev
+  - api.msn.com
+  - api.statsig.com
+  - assets.msn.com
+  - browser-intake-datadoghq.com
+  - cdn.usefathom.com
+  - copilot.microsoft.com
+  - gateway.bingviz.microsoft.net
+  - gateway.bingviz.microsoftapp.net
+  - in.appcenter.ms
+  - location.microsoft.com
+  - makersuite.google.com
+  - odc.officeapps.live.com
+  - openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+  - openaicomproductionae4b.blob.core.windows.net
+  - pplx-res.cloudinary.com
+  - production-openaicom-storage.azureedge.net
+  - r.bing.com
+  - self.events.data.microsoft.com
+  - services.bingapis.com
+  - static.cloudflareinsights.com
+  - sydney.bing.com
+  - www.bing.com
 
 domain_suffix_set:
   -  apple-relay.akamaized.net
@@ -13,4 +38,59 @@ domain_suffix_set:
   -  gspe1-ssl.ls.apple.com
   -  guzzoni.apple.com
   -  smoot.apple.com
+  - ai.com
+  - algolia.net
+  - amazonaws.com
+  - anthropic.com
+  - api.microsoftapp.net
+  - apis.google.com
+  - arkoselabs.com
+  - auth0.com
+  - azureedge.net
+  - bing-shopping.microsoft-falcon.io
+  - chatgpt.com
+  - claude.ai
+  - claudeusercontent.com
+  - clients4.google.com
+  - clients6.google.com
+  - cloudflare.com
+  - colab.google.com
+  - colab.research.google.com
+  - cursor.sh
+  - deepmind.com
+  - deepmind.google
+  - developerprofiles.google.com
+  - dify.ai
+  - edgeservices.bing.com
+  - featuregates.org
+  - gemini.google.com
+  - generativeai.google
+  - googleapis.com
+  - googleusercontent.com
+  - grazie.ai
+  - grok.com
+  - identrust.com
+  - imgix.net
+  - intercom.io
+  - intercomcdn.com
+  - launchdarkly.com
+  - livekit.cloud
+  - meta.ai
+  - meta.com
+  - midjourney.com
+  - oaistatic.com
+  - oaiusercontent.com
+  - openai.com
+  - perplexity.ai
+  - perplexity.com
+  - poe.com
+  - poecdn.net
+  - pplx.ai
+  - proactivebackend-pa.googleapis.com
+  - segment.io
+  - sentry.io
+  - statsigapi.net
+  - stripe.com
+  - wp.com
+  - x.ai
 

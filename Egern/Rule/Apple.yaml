@@ -24,6 +24,15 @@ domain_set:
   - p-events-delivery.akamaized.net
   - testflight.apple.com
 
+domain_keyword_set:
+  - apple-support.akadns.net
+  - apple.com.akadns.net
+  - apple.com.edgekey.net
+  - buy.itunes.apple.com
+  - icloud.com.akadns.net
+  - smp-device
+  - testflight
+
 domain_suffix_set:
   - 100beatscheap.com
   - 12diasdepresentesdeitunes.com
@@ -1578,15 +1587,6 @@ domain_suffix_set:
   - xn--ohq11k7pl25iyo8a.cn
   - xn--ruq8a011kt6y.xn--hxt814e
   - yourmonsterbeats.com
-
-domain_keyword_set:
-  - apple-support.akadns.net
-  - apple.com.akadns.net
-  - apple.com.edgekey.net
-  - buy.itunes.apple.com
-  - icloud.com.akadns.net
-  - smp-device
-  - testflight
 
 ip_cidr_set:
   - 139.178.128.0/18

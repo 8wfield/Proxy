@@ -806,6 +806,34 @@ domain_set:
   - zzlive.zzc-media.com
   - zzq12345.gearhostpreview.com
 
+domain_keyword_set:
+  - .tmall.com
+  - 360buy
+  - alicdn
+  - alimama
+  - alipay
+  - aliyun
+  - appzapp
+  - baidu
+  - baidupcs
+  - beplay
+  - bilibili
+  - ccgslb
+  - chinacache
+  - duobao
+  - hnagroup
+  - jdpay
+  - moke
+  - officecdn
+  - qhimg
+  - qiyi
+  - stripe
+  - taobao
+  - vpimg
+  - weibo
+  - xiami
+  - xiaomi
+
 domain_suffix_set:
   - 0.zone
   - 00.net
@@ -117939,34 +117967,6 @@ domain_suffix_set:
   - zzzyyy.com
   - zzzzaaaa.com
   - zzzzzz.me
-
-domain_keyword_set:
-  - .tmall.com
-  - 360buy
-  - alicdn
-  - alimama
-  - alipay
-  - aliyun
-  - appzapp
-  - baidu
-  - baidupcs
-  - beplay
-  - bilibili
-  - ccgslb
-  - chinacache
-  - duobao
-  - hnagroup
-  - jdpay
-  - moke
-  - officecdn
-  - qhimg
-  - qiyi
-  - stripe
-  - taobao
-  - vpimg
-  - weibo
-  - xiami
-  - xiaomi
 
 ip_cidr_set:
   - 0.0.0.0/32

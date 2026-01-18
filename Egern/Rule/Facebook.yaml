@@ -4,16 +4,16 @@
 
 no_resolve: true
 
+domain_keyword_set:
+  - facebook
+  - fbcdn
+
 domain_suffix_set:
   - facebook.com
   - fb.com
   - fb.me
   - fbcdn.com
   - fbcdn.net
-
-domain_keyword_set:
-  - facebook
-  - fbcdn
 
 ip_cidr_set:
   - 103.4.96.0/22

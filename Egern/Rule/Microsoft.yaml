@@ -2,6 +2,10 @@
 # 规则统计: 79
 # 更新时间: 2026/01/18
 
+domain_keyword_set:
+  - 1drv
+  - microsoft
+
 domain_suffix_set:
   - aadrm.com
   - acompli.com
@@ -80,8 +84,4 @@ domain_suffix_set:
   - wunderlist.com
   - yammer.com
   - yammerusercontent.com
-
-domain_keyword_set:
-  - 1drv
-  - microsoft
 
